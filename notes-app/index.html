@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes App Net</title>
+  </head>
+  <body>
+    <h1>subprime notes</h1>
+    <h2>take notes and never forget...</h2>
+    <input type="text" id="search-text" placeholder="Filter notes" />
+
+    <select name="" id="filter-by">
+      <option value="byEdited">Sort by last edited</option>
+      <option value="byCreated">Sort by recently created</option>
+      <option value="alphabetical">Sort alphabetically</option>
+    </select>
+
+    <div id="notes"></div>
+
+    <button id="create-note">Create Note</button>
+    <!-- <label> <input type="checkbox" name="" id="for-prez" /> Check me for prez! </label> -->
+    <!-- <button id="remove-all">Remove All Notes</button> -->
+
+    <!-- we just need to target the form from our JS -->
+    <!-- <form id="name-form"> -->
+    <!-- use "name" on inputs in a form so you can access values easier in JS -->
+    <!-- <input type="text" name="firstName" id="" placeholder="First name" />
+      <button>Submit</button>
+    </form> -->
+    <script src="https://cdn.jsdelivr.net/npm/uuid@latest/dist/umd/uuidv4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+
+    <script src="notes-functions.js"></script>
+    <script src="notes-script.js"></script>
+  </body>
+</html>
