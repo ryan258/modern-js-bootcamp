@@ -1,31 +1,54 @@
-//! Get hangman in the browser
-// 1. display puzzle in browser
-// 2. display guesses left in browser
-// 3. separate hangman definition from the rest of the code
-
-const wordDisplay = document.querySelector('.word-display')
-const remainingGuesses = document.querySelector('.guessesLeft')
-
-const Hangman = function (word, remainingGuesses, guessedLetters = []) {
-  this.word = word.trim().toLowerCase().split('')
+const Hangman = function (word, remainingGuesses) {
+  this.word = word.toLowerCase().split('')
   this.remainingGuesses = remainingGuesses
   this.guessedLetters = []
+  this.status = 'playing'
+}
+
+Hangman.prototype.calculateStatus = function () {
+  const finished = this.word.every((letter) => this.guessedLetters.includes(letter))
+
+  if (this.remainingGuesses === 0) {
+    this.status = 'failed'
+  } else if (finished) {
+    this.status = 'finished'
+  } else {
+    this.status = 'playing'
+  }
+}
+
+Hangman.prototype.getStatusMessage = function () {
+  if (this.status === 'playing') {
+    return `Guesses left: ${this.remainingGuesses}`
+  } else if (this.status === 'failed') {
+    return `Nice try! The word was "${this.word.join('')}".`
+  } else {
+    return 'Great work! You won a 👻'
+  }
 }
 
 Hangman.prototype.getPuzzle = function () {
-  let wordDisplay = this.word.map((char) => {
-    if (char === ' ') return char
-    if (this.guessedLetters.includes(char)) return char
-    return '*'
+  let puzzle = ''
+
+  this.word.forEach((letter) => {
+    if (this.guessedLetters.includes(letter) || letter === ' ') {
+      puzzle += letter
+    } else {
+      puzzle += '*'
+    }
   })
 
-  return wordDisplay.join('')
+  return puzzle
 }
 
 Hangman.prototype.makeGuess = function (guess) {
   guess = guess.toLowerCase()
   const isUnique = !this.guessedLetters.includes(guess)
   const isBadGuess = !this.word.includes(guess)
+
+  if (this.status !== 'playing') {
+    return
+  }
 
   if (isUnique) {
     this.guessedLetters.push(guess)
@@ -34,4 +57,6 @@ Hangman.prototype.makeGuess = function (guess) {
   if (isUnique && isBadGuess) {
     this.remainingGuesses--
   }
+
+  this.calculateStatus()
 }
