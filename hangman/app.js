@@ -1,9 +1,14 @@
-const product = {
-  name: 'Kill All Humans'
-}
+const game1 = new Hangman('Cat', 2)
 
-console.log(product.hasOwnProperty('name')) // true
-console.log(product.hasOwnProperty('hasOwnProperty')) // false
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty
-//! has its OWN property, not an inherited one like hasOwnProperty
-console.log(product) // we see hasOwnProperty is part of the __proto__
+// show before the first guess
+wordDisplay.textContent = game1.getPuzzle()
+remainingGuesses.textContent = game1.remainingGuesses + ' guesses left'
+
+// respond to each guess
+window.addEventListener('keypress', function (e) {
+  const guess = String.fromCharCode(e.charCode)
+  // console.log(guess)
+  game1.makeGuess(guess)
+  wordDisplay.textContent = game1.getPuzzle()
+  remainingGuesses.textContent = game1.remainingGuesses
+})
