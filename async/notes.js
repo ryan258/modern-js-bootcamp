@@ -1,3 +1,6 @@
+// APIs
+// - https://restcountries.eu/
+
 // HTTP (Hypertext transfer protocol)
 // - request - what do we want to do
 // - response - what was actually done
@@ -21,3 +24,5 @@
 
 //! HTTP Messages
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages
+
+//! For searching for country codes  google iso 3166-2 country name
