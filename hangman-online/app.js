@@ -1,3 +1,8 @@
+//! Asynchronous execution - we can start a task, then actually get other work done before the task completes
+// - we want to stick to async code to allow for other things to happen while waiting for long running tasks to finish
+
+//! Synchronous execution -  we start a task and then wait for it to finish before starting the next thing
+
 const puzzleEl = document.querySelector('#puzzle')
 const guessesEl = document.querySelector('#guesses')
 const game1 = new Hangman('Cat Food', 2)
@@ -13,23 +18,19 @@ window.addEventListener('keypress', (e) => {
   guessesEl.textContent = game1.statusMessage
 })
 
-// make an http req
-const request = new XMLHttpRequest()
-request.addEventListener('readystatechange', (e) => {
-  // "e" is the request itself
-  if (e.target.readyState === 4 && e.target.status === 200) {
-    // console.log(e.target) // we get the JSON text
-    // get status
-    // console.log(e.target.status) // 200
-    const data = JSON.parse(e.target.responseText) // we parse to get a JS object
-    // console.log(data) // Object { puzzle: "Some Word" }
-  } else if (e.target.readyState === 4) {
-    console.log('an error has taken place')
+// we pass it a function, which will be a callback
+//! the callback pattern - we pass in a function and we expect that function to be called with the info when it's ready
+// this is an example of asynchronous execution
+//!        vvv only one of these 2 will ever be defined
+getPuzzle((error, puzzle) => {
+  if (error) {
+    console.log(`error: ${error}`)
+  } else {
+    console.log(puzzle)
   }
 })
-// .open(http-method, url) initializes our request
-request.open('GET', 'https://puzzle.mead.io/puzzle?wordCount=3')
-// then we send of the request to initiate the process
-// - the server will takes so time for it to do what it's going to do and send back a response
-request.send()
-// - so we set up the event listener on our request wait for that response, a "readystatechange" and set it up w/ a function to run when that event happens
+
+//! - just for example, not desireable...
+// const puzzle = getPuzzleSync()
+// console.log(puzzle)
+// console.log('do something else') // we see this before anything else gets logged
