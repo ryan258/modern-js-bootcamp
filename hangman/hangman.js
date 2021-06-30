@@ -1,3 +1,8 @@
+//! Challenge
+// - convert getStatusMessage() to custom getter for statusMessage
+// - convert getPuzzle() to custom getter for puzzle
+// - change usage in app.js
+
 class Hangman {
   constructor(word, remainingGuesses) {
     this.word = word.toLowerCase().split('')
@@ -7,7 +12,7 @@ class Hangman {
   }
 
   calculateStatus() {
-    const finished = this.word.every((letter) => this.guessedLetters.includes(letter))
+    const finished = this.word.every((letter) => this.guessedLetters.includes(letter) || letter === ' ')
 
     if (this.remainingGuesses === 0) {
       this.status = 'failed'
@@ -18,7 +23,8 @@ class Hangman {
     }
   }
 
-  getStatusMessage() {
+  // getStatusMessage() {
+  get statusMessage() {
     if (this.status === 'playing') {
       return `Guesses left: ${this.remainingGuesses}`
     } else if (this.status === 'failed') {
@@ -28,7 +34,7 @@ class Hangman {
     }
   }
 
-  getPuzzle() {
+  get puzzle() {
     let puzzle = ''
 
     this.word.forEach((letter) => {
