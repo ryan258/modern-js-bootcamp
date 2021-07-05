@@ -12,7 +12,7 @@ request.addEventListener('readystatechange', (e) => {
 request.open('GET', 'https://restcountries.eu/rest/v2/all')
 request.send()
 
-//
+// Making an HTTP Request
 
 const countryCode = 'AR'
 const countryRequest = new XMLHttpRequest()
